@@ -46,20 +46,24 @@ namespace SimpleWebScraper
 
                     if (scrapedElements.Any())
                     {
-                        foreach (var scrapedElement in scrapedElements) Console.WriteLine(scrapedElement);
+                        foreach (var scrapedElement in scrapedElements)
+                            Console.WriteLine(scrapedElement);
                     }
                     else
                     {
                         Console.WriteLine("There were no matches for the specified scrape criteria.");
                     }
+                    Console.WriteLine("Done. Press any key to exit...");
+                    Console.ReadKey();
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                Console.WriteLine("Press any key to exit...");
+                Console.ReadKey();
             }
-            Console.WriteLine("Done. Press any key to continue...");
-            Console.ReadKey();
+           
         }
     }
 }
