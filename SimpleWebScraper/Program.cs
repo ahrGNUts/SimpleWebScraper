@@ -1,11 +1,10 @@
-﻿using System;
+﻿using SimpleWebScraper.Builders;
+using SimpleWebScraper.Data;
+using SimpleWebScraper.Workers;
+using System;
 using System.Linq;
 using System.Net;
-using SimpleWebScraper.Data;
-using SimpleWebScraper.Builders;
 using System.Text.RegularExpressions;
-using SimpleWebScraper.Workers;
-
 
 namespace SimpleWebScraper
 {
@@ -17,32 +16,32 @@ namespace SimpleWebScraper
         {
             try
             {
-                // todo: program logic needs to be updated to not use craigslist as their scraper protections are significant...
-                Console.WriteLine("Enter the city you would like to scrape information from: ");
+                Console.WriteLine("Please enter which city you would like to scrape information from:");
                 var craigslistCity = Console.ReadLine() ?? string.Empty;
 
-                Console.WriteLine("Please enter the CraigsList category that you would like to scrape: ");
+                Console.WriteLine("Please enter the CraigsList category that you would like to scrape:");
                 var craigslistCategoryName = Console.ReadLine() ?? string.Empty;
 
                 using (WebClient client = new WebClient())
                 {
-                    string content = client.DownloadString($"http://{craigslistCity.Replace(" ", string.Empty)}.org/{Method}/{craigslistCategoryName}");
+                    string content = client.DownloadString($"http://{craigslistCity.Replace(" ", string.Empty)}.craigslist.org/{Method}/{craigslistCategoryName}");
 
                     ScrapeCriteria scrapeCriteria = new ScrapeCriteriaBuilder()
                         .WithData(content)
                         .WithRegex(@"<a href=\""(.*?)\"" data-id=\""(.*?)\"" class=\""result-title hdrlnk\"">(.*?)</a>")
                         .WithRegexOption(RegexOptions.ExplicitCapture)
-                        .WithParts(new ScrapeCriteriaPartBuilder()
+                        .WithPart(new ScrapeCriteriaPartBuilder()
                             .WithRegex(@">(.*?)</a>")
-                            .WithRegexOptions(RegexOptions.Singleline)
+                            .WithRegexOption(RegexOptions.Singleline)
                             .Build())
-                        .WithParts(new ScrapeCriteriaPartBuilder()
+                        .WithPart(new ScrapeCriteriaPartBuilder()
                             .WithRegex(@"href=\""(.*?)\""")
-                            .WithRegexOptions(RegexOptions.Singleline)
+                            .WithRegexOption(RegexOptions.Singleline)
                             .Build())
                         .Build();
 
                     Scraper scraper = new Scraper();
+
                     var scrapedElements = scraper.Scrape(scrapeCriteria);
 
                     if (scrapedElements.Any())

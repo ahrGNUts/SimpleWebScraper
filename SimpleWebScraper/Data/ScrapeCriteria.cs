@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace SimpleWebScraper.Data
 {
-    public class ScrapeCriteria
+    class ScrapeCriteria
     {
         public ScrapeCriteria()
         {
@@ -12,8 +12,7 @@ namespace SimpleWebScraper.Data
 
         public string Data { get; set; }
         public string Regex { get; set; }
-        public RegexOptions regexOptions { get; set; }
+        public RegexOptions RegexOption { get; set; }
         public List<ScrapeCriteriaPart> Parts { get; set; }
     }
 }
-

@@ -1,13 +1,12 @@
-﻿using System;
+﻿using SimpleWebScraper.Data;
 using System.Text.RegularExpressions;
-using SimpleWebScraper.Data;
 
 namespace SimpleWebScraper.Builders
 {
-    public class ScrapeCriteriaPartBuilder
+    class ScrapeCriteriaPartBuilder
     {
         private string _regex;
-        private RegexOptions _regexOptions;
+        private RegexOptions _regexOption;
 
         public ScrapeCriteriaPartBuilder()
         {
@@ -16,8 +15,8 @@ namespace SimpleWebScraper.Builders
 
         private void SetDefaults()
         {
-            _regex = String.Empty;
-            _regexOptions = RegexOptions.None;
+            _regex = string.Empty;
+            _regexOption = RegexOptions.None;
         }
 
         public ScrapeCriteriaPartBuilder WithRegex(string regex)
@@ -26,9 +25,9 @@ namespace SimpleWebScraper.Builders
             return this;
         }
 
-        public ScrapeCriteriaPartBuilder WithRegexOptions(RegexOptions regexOptions)
+        public ScrapeCriteriaPartBuilder WithRegexOption(RegexOptions regexOption)
         {
-            _regexOptions = regexOptions;
+            _regexOption = regexOption;
             return this;
         }
 
@@ -36,10 +35,8 @@ namespace SimpleWebScraper.Builders
         {
             ScrapeCriteriaPart scrapeCriteriaPart = new ScrapeCriteriaPart();
             scrapeCriteriaPart.Regex = _regex;
-            scrapeCriteriaPart.RegexOption = _regexOptions;
-
+            scrapeCriteriaPart.RegexOption = _regexOption;
             return scrapeCriteriaPart;
         }
     }
 }
-
