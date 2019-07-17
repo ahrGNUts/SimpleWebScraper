@@ -17,6 +17,7 @@ namespace SimpleWebScraper
         {
             try
             {
+                // todo: program logic needs to be updated to not use craigslist as their scraper protections are significant...
                 Console.WriteLine("Enter the city you would like to scrape information from: ");
                 var craigslistCity = Console.ReadLine() ?? string.Empty;
 
